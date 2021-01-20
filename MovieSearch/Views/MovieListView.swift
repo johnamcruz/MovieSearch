@@ -10,14 +10,14 @@ import SwiftUI
 struct MovieListView: View {
     let title = "Movie Search"
     @State private var searchText = ""
-    var  movies : [MovieViewModel] = MovieViewModel.getMovies()
+    @State var  movies : [MovieViewModel] = MovieViewModel.getMovies()
     
     var body: some View {
         NavigationView {
-            VStack(spacing: 0) {
+            VStack {
                 SearchBarView(text: $searchText)
                     .padding(.top, -15)
-                List(movies) { movie in
+                List(movies.filter { searchText.isEmpty ? true : $0.title.contains(searchText) }) { movie in
                     MovieCellView(movie: movie)
                 }
                 .listStyle(PlainListStyle())
